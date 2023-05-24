@@ -4,6 +4,7 @@ import { ArrowRight } from '@phosphor-icons/react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/router'
 
 const claimUsernameFormSchema = z.object({
   username: z
@@ -25,9 +26,11 @@ export function ClaimUsernameForm() {
   } = useForm<ClaimUsernameFormData>({
     resolver: zodResolver(claimUsernameFormSchema),
   })
+  const router = useRouter()
 
   function handleClaimUsername(data: ClaimUsernameFormData) {
-    console.log(data)
+    const { username } = data
+    router.push(`/register?username=${username}`)
   }
 
   return (
@@ -43,7 +46,6 @@ export function ClaimUsernameForm() {
           Reservar usuário
           <ArrowRight />
         </Button>
-        {errors.username?.message}
       </Form>
 
       <FormAnnotation>
