@@ -3,6 +3,7 @@ import '../lib/dayjs'
 import { globalStyles } from '@/styles/globals'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { SessionProvider } from 'next-auth/react'
+import { DefaultSeo } from 'next-seo'
 import type { AppProps } from 'next/app'
 import { queryClient } from '../lib/react-query'
 
@@ -13,10 +14,20 @@ export default function App({
   pageProps: { session, ...pageProps },
 }: AppProps) {
   return (
-    <SessionProvider session={session}>
-      <QueryClientProvider client={queryClient}>
-        <Component {...pageProps} />
-      </QueryClientProvider>
-    </SessionProvider>
+    <>
+      <DefaultSeo
+        openGraph={{
+          type: 'website',
+          locale: 'pt_BR',
+          url: 'https://www.ignite-call.rocketseat.com.br',
+          siteName: 'Ignite Call',
+        }}
+      />
+      <SessionProvider session={session}>
+        <QueryClientProvider client={queryClient}>
+          <Component {...pageProps} />
+        </QueryClientProvider>
+      </SessionProvider>
+    </>
   )
 }
